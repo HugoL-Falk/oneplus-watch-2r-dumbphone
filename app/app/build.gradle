@@ -1,0 +1,28 @@
+plugins {
+    id 'com.android.application'
+}
+
+android {
+    namespace 'org.op2r.pocketplayer'
+    compileSdk 34
+
+    defaultConfig {
+        applicationId 'org.op2r.pocketplayer'
+        minSdk 30
+        targetSdk 34
+        versionCode 7
+        versionName '0.7'
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+}
+
+dependencies {
+    implementation 'androidx.palette:palette:1.0.0'
+    implementation 'androidx.wear.watchface:watchface:1.2.1'
+    implementation 'androidx.wear.watchface:watchface-guava:1.2.1'
+    testImplementation 'junit:junit:4.13.2'
+}

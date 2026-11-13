@@ -1,0 +1,9 @@
+# build output and local settings
+app/.gradle/
+app/build/
+app/app/build/
+app/local.properties
+exports/
+__pycache__/
+*.apk
+.superpowers/

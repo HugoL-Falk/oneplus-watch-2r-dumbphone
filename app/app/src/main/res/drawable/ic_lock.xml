@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- A10 icon: circle split diagonally into two flat colours, white symbol. -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="48dp" android:height="48dp" android:viewportWidth="48" android:viewportHeight="48">
+    <path android:fillColor="#3A2FBF" android:pathData="M24,0 A24,24 0 1,1 24,48 A24,24 0 1,1 24,0 Z"/>
+    <group android:rotation="-45" android:pivotX="24" android:pivotY="24">
+        <path android:fillColor="#5B8CFF" android:pathData="M0,24 A24,24 0 0,1 48,24 Z"/>
+    </group>
+    <path android:fillColor="#FFFFFF" android:pathData="M18.2,22 L29.8,22 A3.2,3.2 0 0,1 33,25.2 L33,31.8 A3.2,3.2 0 0,1 29.8,35 L18.2,35 A3.2,3.2 0 0,1 15,31.8 L15,25.2 A3.2,3.2 0 0,1 18.2,22 Z"/>
+    <path android:strokeColor="#FFFFFF" android:strokeWidth="2.6" android:pathData="M18.5,22 L18.5,18 A5.5,5.5 0 0,1 29.5,18 L29.5,22"/>
+</vector>

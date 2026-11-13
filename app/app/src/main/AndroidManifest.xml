@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <uses-feature android:name="android.hardware.type.watch" />
+
+    <!-- Granted once over adb (`pm grant org.op2r.pocketplayer android.permission.DUMP`).
+         Lets the app switch the sensor service's restrict mode itself. -->
+    <uses-permission android:name="android.permission.DUMP" />
+
+    <!-- Album covers from Deezer / iTunes (Spotify's session carries none). -->
+    <uses-permission android:name="android.permission.INTERNET" />
+
+    <!-- testOnly: lets `adb shell dpm remove-active-admin` remove the device admin,
+         so the app can always be uninstalled again. Install with `adb install -t`. -->
+    <application
+        android:label="Pocket Player"
+        android:icon="@drawable/ic_player"
+        android:theme="@android:style/Theme.DeviceDefault.NoActionBar"
+        android:testOnly="true">
+
+        <meta-data
+            android:name="com.google.android.wearable.standalone"
+            android:value="true" />
+
+        <activity
+            android:name=".MainActivity"
+            android:exported="true"
+            android:launchMode="singleTask">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <!-- Invisible: locks the watch and closes. Point a button shortcut at it. -->
+        <activity
+            android:name=".LockActivity"
+            android:exported="true"
+            android:showWhenLocked="true"
+            android:label="Lock Watch"
+            android:icon="@drawable/ic_lock"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar"
+            android:excludeFromRecents="true"
+            android:noHistory="true"
+            android:taskAffinity="">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <!-- The player's menu (no launcher entry; opened from Pocket Player). Own task, closes when left. -->
+        <activity
+            android:name=".ToolsActivity"
+            android:exported="false"
+            android:label="Menu"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar"
+            android:excludeFromRecents="true"
+            android:taskAffinity="" />
+
+        <!-- Spike: a watch face with media controls. -->
+        <service
+            android:name=".PlayerFaceService"
+            android:exported="true"
+            android:label="Pocket Face"
+            android:permission="android.permission.BIND_WALLPAPER">
+            <intent-filter>
+                <action android:name="android.service.wallpaper.WallpaperService" />
+                <category android:name="com.google.android.wearable.watchface.category.WATCH_FACE" />
+            </intent-filter>
+            <meta-data android:name="android.service.wallpaper" android:resource="@xml/watch_face" />
+            <meta-data android:name="com.google.android.wearable.watchface.preview" android:resource="@drawable/ic_player" />
+            <meta-data android:name="com.google.android.wearable.watchface.preview_circular" android:resource="@drawable/ic_player" />
+        </service>
+
+        <!-- Needed only so the app may read media sessions (Spotify). -->
+        <service
+            android:name=".MediaListener"
+            android:exported="true"
+            android:permission="android.permission.BIND_NOTIFICATION_LISTENER_SERVICE">
+            <intent-filter>
+                <action android:name="android.service.notification.NotificationListenerService" />
+            </intent-filter>
+        </service>
+
+        <!-- Device admin with only the force-lock policy, for lockNow(). -->
+        <receiver
+            android:name=".AdminReceiver"
+            android:exported="true"
+            android:permission="android.permission.BIND_DEVICE_ADMIN">
+            <meta-data
+                android:name="android.app.device_admin"
+                android:resource="@xml/device_admin" />
+            <intent-filter>
+                <action android:name="android.app.action.DEVICE_ADMIN_ENABLED" />
+            </intent-filter>
+        </receiver>
+    </application>
+</manifest>
